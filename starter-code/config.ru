@@ -2,15 +2,12 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
-# Models
+#Models
 require './models/artist'
-# require './models/manager'
-# require './models/song'
 
-# Controllers
+#Controllers
 require './app'
-require './controllers/artists_controller'
-require './controllers/managers_controller'
-require './controllers/songs_controller'
+
+#More Controllers
 
 run Tunr

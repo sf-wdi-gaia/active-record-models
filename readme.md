@@ -166,7 +166,9 @@ Now let's boot up our application and see what we get. In the root of the applic
 rackup
 ```
 
-Start it up, check it out in your browser. Try clicking 'Add Artist' – shucks!
+>If you want the page to be auto-reloaded when files change try `gem install shotgun` and `shotgun config.ru`
+
+Start it up, check it out in your browser. Try clicking 'Add Artist' – shucks! Here's an example error:
 
 ![](http://s30.postimg.org/d5bpwkoo1/Screen_Shot_2015_07_10_at_10_42_37_AM.png)
 

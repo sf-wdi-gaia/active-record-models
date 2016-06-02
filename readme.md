@@ -1,15 +1,30 @@
+<!--
+Creator: Ilias
+Market: SF
+-->
+
+![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png)
+
 # Building Models with ActiveRecord
 
-### Learning Objectives
-*After this lesson, students will be able to:*
+### Why is this important?
+<!-- framing the "why" in big-picture/real world examples -->
+*This workshop is important because:*
+
+ActiveRecord allows us to interact with a database by writing declarative Ruby instead of imperative SQL. It is a major component of Rails.
+
+### What are the objectives?
+<!-- specific/measurable goal for students to achieve -->
+*After this workshop, developers will be able to:*
 
 - Create a model that inherits from ActiveRecord class
 - CRUD data in the database using our model
 - Write a migration to define a database schema
 - Update our database schema with another migration
 
-### Preparation
-*Before this lesson, students should already be able to:*
+### Where should we be now?
+<!-- call out the skills that are prerequisites -->
+*Before this workshop, developers should already be able to:*
 
 - Explain MVC
 - Create a simple Sinatra app

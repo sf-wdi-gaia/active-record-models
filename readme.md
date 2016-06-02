@@ -450,7 +450,22 @@ For the last part of class, the guys at Tunr, decided they need more information
 - Register a new artist using the ```artists/new``` end point
 
 
-## Conclusion
+## Closing Thoughts
 - What is ActiveRecord and how does it interact with your database?
 - What are migrations?
+- Why should you never touch `schema.rb`
 - Briefly, describe how to configure your Sinatra app to use ActiveRecord Models with your database.
+
+## Additional Resources
+
+- [ActiveRecord Migrations Official Docs](http://edgeguides.rubyonrails.org/active_record_migrations.html)
+- [Active Record data types](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column):
+	- :boolean
+	- :datetime
+	- :decimal
+	- :float
+	- :integer
+	- :references
+	- :string
+	- :text
+	- :timestamp

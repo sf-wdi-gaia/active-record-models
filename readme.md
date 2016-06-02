@@ -22,7 +22,7 @@
 
 We can apply the design pattern of MVC to make more complex applications. Models literally "model" or describe the form of an object that we will represent in our application. This model object will contain methods that set and get its data in our database. Using a model, to a large extent, abstracts the complex SQL statements of a database away from the developer.
 
-<img style="max-height:300px;" src="http://i.stack.imgur.com/ocEWx.png"/>
+<img style="max-height:300px;" src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2012/10/mvc1.png"/>
 
 ##ORM
 

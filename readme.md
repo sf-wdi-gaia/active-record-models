@@ -128,14 +128,14 @@ The name of the database is up to you, but `<app_name>_development` is a good pa
 
 #### Makin' Models
 
-Now that we're *almost* configured, let's make a class that uses all this fancy stuff.  Under the models directory, create a file called `artist.rb` to allow an Artist class to use ActiveRecord:
+Now that we're *almost* configured, let's make a class that uses all this fancy stuff.  Under the models directory, note the file `artist.rb`.
 
 ```ruby
 class Artist < ActiveRecord::Base
 end
 ```
 
-This is saying, our new model shall inherit all the code from the ActiveRecord class, which has a bunch of handy methods already on it. For example `Artist.create` will create a new Artist in the database or `Artist.first` will grab the first one in the database, etc.
+Our new model will inherit all the code from the ActiveRecord class, which has a bunch of handy methods already on it. For example `Artist.create` will create a new Artist in the database or `Artist.first` will grab the first one in the database, etc.
 
 This is where Rake comes in.
 

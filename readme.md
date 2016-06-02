@@ -61,7 +61,7 @@ Using ORMs, the properties and relationships of the objects in an application ca
 
 [Rails Guides: Active Record Basics](http://guides.rubyonrails.org/active_record_basics.html):
 
-> Active Record, as an ORM Framework, gives us several mechanisms, the most important being the ability to:
+> ActiveRecord, as an ORM Framework, gives us several mechanisms, the most important being the ability to:
 
 > - represent models and their data
 - represent associations between these models
@@ -69,20 +69,14 @@ Using ORMs, the properties and relationships of the objects in an application ca
 - validate models before they get persisted to the database
 - perform database operations in an object-oriented fashion
 
-Active Record is the Model in MVC. In other words it is the layer in the system responsible for representing business data and logic. We require it in our project by adding the `gem activerecord`
-
-***This will all make a lot more sense once we start using it...so, let's go!***
+ActiveRecord is the Model in MVC. In other words it is the layer in the system responsible for representing business data and logic. We require it in our project by adding the `gem activerecord`
 
 
-## Scenario
+## Scenario: Tunr
 
-We're a successful talent management agency for those in the music industry called Tunr. We have designed a Sinatra app to manage our artists. Look in `starter-code` and take a look at the `app.rb` & `config.ru` files.
+We're a successful talent management agency for those in the music industry called Tunr (Kanye tweeted about us and then we blew up). We have designed a Sinatra app to manage our artists. Look in `starter-code` and take a look at the `app.rb` & `config.ru` files.
 
-**For 5 minutes talk with a partner and discuss:**
-
-* differences from our Sinatra apps in the beginning of the week
-* what you think each line does and how they relate to the rest of the app
-* Do you notice any odd methods in the seven restful actions? I do:
+**For 5 minutes talk with a partner and identify anything that is new**
 
 ```ruby
 Artist.all #what?
@@ -114,15 +108,15 @@ gem "tux" #allows us to have an interactive shell to play with object creation
 
 ...and don't forget: what do we do every time we modify the Gemfile? `bundle install`!
 
-### Setting up the Database (Code along optional)
+### Setting up the Database
 
 #### Database configuration
 
-Now, all our gems from the Gemfile are already being required thanks to the first few lines of `config.ru`, so that's great.
+Now, all our gems from the Gemfile have been required thanks to the first few lines of `config.ru`.
 
 But we're about to start using a SQL database, so we gotta configure our Sinatra application so it knows how to do that.
 
-Let's make a *directory*  called `config` in root. And inside that, `touch config/database.yml`. YAML is a nice little format that essentially works like a Ruby hash, but is written in plaintext key-value. Great for configuration, it'll be super easy.
+Checkout the file `config/database.yml`.
 
 ```yaml
 development:
@@ -130,22 +124,22 @@ development:
   database: tunr_development
 ```
 
-The name of the database is up to you, but `something_development` is a good pattern to get into. A typical application would have three databases, the other two being `something_production` and `something_test` for production and test environments respectively.
+The name of the database is up to you, but `<app_name>_development` is a good pattern to get into. A typical application would have three databases, the other two being `<app_name>_production` and `<app_name>_test` for production and test environments respectively.
 
 #### Makin' Models
 
-Now that we're _almost_ configured, let's make a class that uses all this fancy stuff.  Under the models directory, create a file called ```artist.rb``` to allow an Artist class to use ActiveRecord:
+Now that we're *almost* configured, let's make a class that uses all this fancy stuff.  Under the models directory, create a file called `artist.rb` to allow an Artist class to use ActiveRecord:
 
 ```ruby
 class Artist < ActiveRecord::Base
 end
 ```
 
-So again, this is saying: "We want a class named Artist, and it shall inherit all the code from the Active Record class, which has a bunch of handy methods already written for me."  And now, when you're working with the Artist class, you'll be able to do `Artist.create` in your code to create a new Artist in the database or `Artist.first` to grab the first one in the database and so on...
+This is saying, our new model shall inherit all the code from the ActiveRecord class, which has a bunch of handy methods already on it. For example `Artist.create` will create a new Artist in the database or `Artist.first` will grab the first one in the database, etc.
 
 This is where Rake comes in.
 
-Rake technically stands for 'ruby make', which is a tool we're going to use to run predefined tasks for us. You can program your own rake tasks, but active record comes with a bunch already preset ones, which we can use to set up the database we'll store our data in database in Postgres. First we need to create a database...
+Rake technically stands for "ruby make", which is a tool we're going to use to run predefined tasks for us. You can program your own rake tasks, but ActiveRecord comes with a bunch already preset ones, which we can use to set up the database we'll store our data in database in Postgres. First we need to create a database.
 
 Earlier you learned to do this:
 
@@ -176,7 +170,7 @@ Start it up, check it out in your browser. Try clicking 'Add Artist' – shucks
 
 ![](http://s30.postimg.org/d5bpwkoo1/Screen_Shot_2015_07_10_at_10_42_37_AM.png)
 
-## Error?? Demo
+## Errors!
 
 If you read through what this page is actually telling you, you can probably guess why this happened.
 
@@ -420,7 +414,7 @@ We will now delete David Bowie, a moment of silence please...
 
 ###More CRUD actions
 
-For a comprehensive set of all the CRUD actions active record can perform checkout out the CRUD section of [Active Record Basics](http://guides.rubyonrails.org/active_record_basics.html#crud-reading-and-writing-data) on Ruby Guides!
+For a comprehensive set of all the CRUD actions ActiveRecord can perform checkout out the CRUD section of [Active Record Basics](http://guides.rubyonrails.org/active_record_basics.html#crud-reading-and-writing-data) on Ruby Guides!
 
 ## Independent Practice
 

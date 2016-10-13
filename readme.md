@@ -27,7 +27,6 @@ ActiveRecord allows us to interact with a database by writing declarative Ruby i
 *Before this workshop, developers should already be able to:*
 
 - Explain MVC
-- Create a simple Sinatra app
 - Write object oriented Ruby
 - Set and get data from a SQL database
 
@@ -35,7 +34,7 @@ ActiveRecord allows us to interact with a database by writing declarative Ruby i
 
 #### MVC - Models
 
-We can apply the design pattern of MVC to make more complex applications. Models literally "model" or describe the form of an object that we will represent in our application. This model object will contain methods that set and get its data in our database. Using a model, to a large extent, abstracts the complex SQL statements of a database away from the developer.
+We can apply the design pattern of MVC to make more complex applications. **Models** literally "model" or describe the form of an object that we will represent in our application. This model object will contain methods that set and get its data in our database. Using a model, to a large extent, abstracts the complex SQL statements of a database away from the developer.
 
 <img style="max-height:300px;" src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2012/10/mvc1.png"/>
 
@@ -107,21 +106,7 @@ These `.all`, `.create`, `.find` ActiveRecord methods will write the SQL for us,
 
 #### Including ActiveRecord
 
-As noted earlier, ActiveRecord is a gem and since we're building an app with a bunch of gems using Bundler, let's look at the Gemfile.
-
-**Gemfile**
-
-```ruby
-source "https://rubygems.org"  #tells your app where to get the gems from
-gem "sinatra" #allows us to use and run Sinatra record
-gem "sinatra-activerecord" #allows us to use Sinatra with ActiveRecord
-gem "rake" #gives us tasks and dependencies that can be specified in standard Ruby syntax (don't worry about it if you don't get it)
-gem "activerecord" #gives us all the excellent class methods you see above (and more) and allows for object relational mapping
-gem "pg" #allows us to use postgresql as a DBMS for our app
-gem "tux" #allows us to have an interactive shell to play with object creation
-```
-
-...and don't forget: what do we do every time we modify the Gemfile? `bundle install`!
+As noted earlier, ActiveRecord is a gem and since we're building an app with a bunch of gems using Bundler, take a look at the Gemfile and don't forget to `bundle install`!
 
 ### Setting up the Database
 
@@ -154,50 +139,15 @@ Our new model will inherit all the code from the ActiveRecord class, which has a
 
 This is where Rake comes in.
 
-Rake technically stands for "ruby make", which is a tool we're going to use to run predefined tasks for us. You can program your own rake tasks, but ActiveRecord comes with a bunch already preset ones, which we can use to set up the database we'll store our data in database in Postgres. First we need to create a database.
+Rake technically stands for "ruby make", which is a tool we're going to use to run predefined tasks for us. You can program your own rake tasks, but *ActiveRecord comes with a bunch of preset ones*. We can use these to set up our Postgres database.
 
-Earlier you learned to do this:
-
-```bash
-$ psql
-psql (9.4.1, server 9.3.5)
-Type "help" for help.
-
-username=# create database tunr;
-CREATE DATABASE
+**Rakefile**
+```ruby
+require "sinatra/activerecord"
+require "sinatra/activerecord/rake"
 ```
 
-Now, we can wrap that up in one terminal command with rake's help. 
-
->Before you do this make sure your Postgres application/server is open and running.
-
-`rake db:create`
-
-Run it. Boom, database created.
-
-Now let's boot up our application and see what we get. In the root of the application run:
-
-```
-rackup
-```
-
->If you want the page to be auto-reloaded when files change try `gem install shotgun` and `shotgun config.ru`
-
-Start it up, check it out in your browser. Try clicking 'Add Artist' – shucks! Here's an example error:
-
-![](http://s30.postimg.org/d5bpwkoo1/Screen_Shot_2015_07_10_at_10_42_37_AM.png)
-
-## Errors!
-
-If you read through what this page is actually telling you, you can probably guess why this happened.
-
-We never actually required our new model into our application. In your `config.ru` add the line `require './models/artist'` **above** the require statement for the `app`.
-
-Try it again... Do we hit another error? Maybe something along the lines of `PG::UndefinedTable: ERROR: relation "artists" does not exist`.
-
-Even though we have a database (`tunr_development`) we never created any tables or schema.  We never made an Artist table, just the database!
-
-Just like we used a wonderful Rake command to help us quickly create a database, we have some to help us create tables, too.
+By including active record in our Rakefile, we get access to it's built-in rake tasks.
 
 > Here's a pretty comprehensive list of rake commands you can run on the database.
 
@@ -221,6 +171,39 @@ rake db:structure:dump      # Dump the database stru...
 rake db:structure:load      # Recreate the databases...
 rake db:version             # Retrieves the current ...
 ```
+
+If we did this using SQL:
+
+```bash
+$ psql
+psql (9.4.1, server 9.3.5)
+Type "help" for help.
+
+username=# create database tunr;
+CREATE DATABASE
+```
+
+**Instead**, let's use a rake task. 
+
+>Note: Before you do this make sure your Postgres application/server is open and running.
+
+`rake db:create`
+
+*Boom*, database created.
+
+Now let's boot up our application to start interfacing with the database.
+
+## Errors!
+
+If you read through what this page is actually telling you, you can probably guess why this happened.
+
+We never actually required our new model into our application. In your `config.ru` add the line `require './models/artist'` **above** the require statement for the `app`.
+
+Try it again... Do we hit another error? Maybe something along the lines of `PG::UndefinedTable: ERROR: relation "artists" does not exist`.
+
+Even though we have a database (`tunr_development`) we never created any tables or schema.  We never made an Artist table, just the database!
+
+Just like we used a wonderful Rake command to help us quickly create a database, we have some to help us create tables, too.
 
 ## Let's Create Some Data Tables with migrations...and without SQL!
 

@@ -146,22 +146,7 @@ Rake technically stands for "ruby make", which is a tool we're going to use to r
 ```bash
 $ rake -T
 
-rake db:create              # Creates the database f...
-rake db:create_migration    # Create a migration (pa...
-rake db:drop                # Drops the database fro...
-rake db:fixtures:load       # Load fixtures into the...
-rake db:migrate             # Migrate the database (...
-rake db:migrate:status      # Display status of migr...
-rake db:rollback            # Rolls the schema back ...
-rake db:schema:cache:clear  # Clear a db/schema_cach...
-rake db:schema:cache:dump   # Create a db/schema_cac...
-rake db:schema:dump         # Create a db/schema.rb ...
-rake db:schema:load         # Load a schema.rb file ...
-rake db:seed                # Load the seed data fro...
-rake db:setup               # Create the database, l...
-rake db:structure:dump      # Dump the database stru...
-rake db:structure:load      # Recreate the databases...
-rake db:version             # Retrieves the current ...
+<List of rake commands here>
 ```
 
 If we did this using SQL:
@@ -183,36 +168,17 @@ CREATE DATABASE
 
 *Boom*, database created.
 
-Now let's boot up our application to start interfacing with the database. `ruby app.rb`.
-
-## Errors!
-
-If you read through what this page is actually telling you, you can probably guess why this happened.
-
-We never actually required our new model into our application. In your `config.ru` add the line `require './models/artist'` **above** the require statement for the `app`.
-
-Try it again... Do we hit another error? Maybe something along the lines of `PG::UndefinedTable: ERROR: relation "artists" does not exist`.
-
-Even though we have a database (`tunr_development`) we never created any tables or schema.  We never made an Artist table, just the database!
-
-Just like we used a wonderful Rake command to help us quickly create a database, we have some to help us create tables, too.
-
-## Let's Create Some Data Tables with migrations...and without SQL!
-
-You'll notice we've already set up a bit of your Rakefile for you – we're basically just using the commands that the ActiveRecord gem has built in. Don't worry about memorizing the code in this file, but _do_ make sure you understand what the commands it gives us do.
-
-The real meat & potatoes here, after creating a database, is to create a _table_ in the database.
-
-To create a table we need to create a "migration".
-
 #### Migrations
-*"Migrations are a convenient way to alter your database schema over time in a consistent and easy way. They use a Ruby DSL [Domain Specific Language] so that you don't have to write SQL by hand, allowing your schema and changes to be database independent. You can think of each migration as being a new 'version' of the database."*
 
-[Read more here](http://guides.rubyonrails.org/active_record_migrations.html)
+Now that we have a database, we'll need to create some tables inside of it to store certain models we want to persist. Each table will have have columns that correspond to an attribute of one of our model instances. 
 
-Migrations are instructions for an iteration to your database's architecture. Each one's name is generated for you and timestamped, so it knows how to walk through them over time to repeat the same instructions on any new computer that needs to migrate to the same database state. A proper understanding of this is crucial, especially when on a team of developers, because it keeps your local databases in sync when changes are made on one computer. When the rest of the team `pull`s the new migration files migration the full set of them are a perfect record of all changes that have been made over time.
+*"Migrations are a convenient way to alter your database schema over time in a consistent and easy way. They use a Ruby DSL [Domain Specific Language] so that you don't have to write SQL by hand, allowing your schema and changes to be database independent. You can think of each migration as being a new 'version' of the database."* [Source](http://guides.rubyonrails.org/active_record_migrations.html)
+
+Migrations are *instructions to change the database's architecture*. They can be automatically generated with active record. Migrations can always be rerun to recreate a consistent database state.
 
 So let's build a new version of our database that has an artists table:
+
+>Note: we're using the gem `standalone_migrations` to do this as we're doing it outside a Rails project.
 
 ```bash
 rake db:create_migration NAME=create_artists
@@ -225,7 +191,16 @@ Now let's open the generated file and put the finishing touches on our table:
 ```ruby
 class CreateArtists < ActiveRecord::Migration
   def change
-    create_table :artists do |t| #t stands for table
+  end
+end
+```
+
+Let's add some columns to our table in order to allow for our model to have specific attributes. Let's say we want each artist to have a name, photo_url, and nationality.
+
+```ruby
+class CreateArtists < ActiveRecord::Migration
+  def change
+    create_table :artists do |t|
       t.string :name #add a name attribute of type string to the table
       t.string :photo_url #also add a photo_url attribute of type string
       t.string :nationality # finally add a nationality attribute of type string
@@ -233,7 +208,6 @@ class CreateArtists < ActiveRecord::Migration
     end
   end
 end
-
 ```
 
 Run the migration with `rake db:migrate`. That'll run any migrations that haven't been run yet and make the appropriate changes to the database.

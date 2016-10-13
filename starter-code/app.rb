@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'active_record'
+require "sinatra/activerecord"
 require 'pg'
 require 'pry'
 

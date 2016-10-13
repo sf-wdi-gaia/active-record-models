@@ -422,7 +422,7 @@ We will now delete David Bowie, a moment of silence please...
 > It is best practice to use an `id` for finding an entry in the table. Assuming David Bowie is number `1` (which he is)...
 
 ```ruby
->> david = Arist.find(1)
+>> david = Artist.find(1)
 >> david.destroy
 ```
 

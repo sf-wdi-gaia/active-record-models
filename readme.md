@@ -139,15 +139,7 @@ Our new model will inherit all the code from the ActiveRecord class, which has a
 
 This is where Rake comes in.
 
-Rake technically stands for "ruby make", which is a tool we're going to use to run predefined tasks for us. You can program your own rake tasks, but *ActiveRecord comes with a bunch of preset ones*. We can use these to set up our Postgres database.
-
-**Rakefile**
-```ruby
-require "sinatra/activerecord"
-require "sinatra/activerecord/rake"
-```
-
-By including active record in our Rakefile, we get access to it's built-in rake tasks.
+Rake technically stands for "ruby make", which is a tool we're going to use to run predefined tasks for us. You can program your own rake tasks, but *ActiveRecord comes with a bunch of preset ones*. We can use these to set up our Postgres database. By including active record in our **Rakefile**, we get access to it's built-in rake tasks.
 
 > Here's a pretty comprehensive list of rake commands you can run on the database.
 
@@ -191,7 +183,7 @@ CREATE DATABASE
 
 *Boom*, database created.
 
-Now let's boot up our application to start interfacing with the database.
+Now let's boot up our application to start interfacing with the database. `ruby app.rb`.
 
 ## Errors!
 

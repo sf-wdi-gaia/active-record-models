@@ -361,19 +361,19 @@ For a comprehensive set of all the CRUD actions ActiveRecord can perform checkou
 
 In seperate migration files:
 
-1) Add a column "groupie"
-2) Rename the column "groupie" to "significant_other"
-3) Delete the column "significant_other"
+	1) Add a column "groupie"
+	2) Rename the column "groupie" to "significant_other"
+	3) Delete the column "significant_other"
 
 Now, run the seeds.rb file with the command `rake db:seed`. Then, in app.rb write code to do the following:
 
-1) Find all artists
-2) Find the last artist
-3) Find the artist with the name "Enya" 
-4) Find all artists who are American
-5) Create the artist "Puff Daddy"
-6) Change his name to "Diddy"
-7) Destroy "Diddy"
+	1) Find all artists
+	2) Find the last artist
+	3) Find the artist with the name "Enya" 
+	4) Find all artists who are American
+	5) Create the artist "Puff Daddy"
+	6) Change his name to "Diddy"
+	7) Destroy "Diddy"
 
 
 ## Closing Thoughts

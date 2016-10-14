@@ -359,11 +359,21 @@ For a comprehensive set of all the CRUD actions ActiveRecord can perform checkou
 
 > _This a recommended pair programming activity._
 
-For the last part of class, the guys at Tunr, decided they need more information about the people they represent. Do the following to make it happen:
+In seperate migration files:
 
-- Add another column to your Artists table named "Address" that stores string data (be careful with the datatype on this one - it's not what you think)
-- Add a column with a different data type, and then delete it
-- Update an existing column to have a different name
+1) Add a column "groupie"
+2) Rename the column "groupie" to "significant_other"
+3) Delete the column "significant_other"
+
+Now, run the seeds.rb file with the command `rake db:seed`. Then, in app.rb write code to do the following:
+
+1) Find all artists
+2) Find the last artist
+3) Find the artist with the name "Enya" 
+4) Find all artists who are American
+5) Create the artist "Puff Daddy"
+6) Change his name to "Diddy"
+7) Destroy "Diddy"
 
 
 ## Closing Thoughts
@@ -375,7 +385,7 @@ For the last part of class, the guys at Tunr, decided they need more information
 ## Additional Resources
 
 - [ActiveRecord Migrations Official Docs](http://edgeguides.rubyonrails.org/active_record_migrations.html)
-- [Active Record data types](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column):
+- [ActiveRecord data types](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column):
 	- :boolean
 	- :datetime
 	- :decimal
@@ -385,3 +395,4 @@ For the last part of class, the guys at Tunr, decided they need more information
 	- :string
 	- :text
 	- :timestamp
+- Bonus: [ActiveRecord associations](http://guides.rubyonrails.org/association_basics.html)

@@ -85,24 +85,15 @@ Using ORMs, the properties and relationships of the objects in an application ca
 
 ActiveRecord is the Model in MVC. In other words it is the layer in the system responsible for representing business data and logic. We require it in our project by adding the `gem activerecord`
 
+### Preview
 
-## Scenario: Tunr
-
-We're a successful talent management agency for those in the music industry called Tunr (Kanye tweeted about us and then we blew up). We have designed a Sinatra app to manage our artists. Look in `starter-code` and take a look at the `app.rb` & `config.ru` files.
-
-**For 5 minutes talk with a partner and identify anything that is new**
+ActiveRecord methods will write the SQL for us, and once we've connected our database, we can pull any associated model data from it easily. Before we do that, let's set up our project to use ActiveRecord and configure which database we'll talk to:
 
 ```ruby
-Artist.all #what?
-#...
-Artist.create(params[:artist]) #who?
-#...
-Artist.find(params[:id]) #nah uh!!
+Artist.all
+Artist.create(params[:artist])
+Artist.find(params[:id])
 ```
-
-### Clarifying our starting point
-
-These `.all`, `.create`, `.find` ActiveRecord methods will write the SQL for us, and once we've connected our database, we can pull any associated model data from it easily. Before we do that, let's set up our project to use ActiveRecord and configure which database we'll talk to:
 
 #### Including ActiveRecord
 
@@ -110,25 +101,19 @@ As noted earlier, ActiveRecord is a gem and since we're building an app with a b
 
 ### Setting up the Database
 
+####Setup
+
+`cd` into `starter-code` and run `bundle`.
+
+>Note: ensure the version of ruby being run is at least `ruby-2.2.2`.
+
 #### Database configuration
 
-Now, all our gems from the Gemfile have been required thanks to the first few lines of `config.ru`.
-
-But we're about to start using a SQL database, so we gotta configure our Sinatra application so it knows how to do that.
-
-Checkout the file `config/database.yml`.
-
-```yaml
-development:
-  adapter: postgresql
-  database: tunr_development
-```
-
-The name of the database is up to you, but `<app_name>_development` is a good pattern to get into. A typical application would have three databases, the other two being `<app_name>_production` and `<app_name>_test` for production and test environments respectively.
+In `config/database.yml`, the name of the database is up to you, but `<app_name>_development` is a good pattern to get into. A typical application would have three databases, the other two being `<app_name>_production` and `<app_name>_test` for production and test environments respectively.
 
 #### Makin' Models
 
-Now that we're *almost* configured, let's make a class that uses all this fancy stuff.  Under the models directory, note the file `artist.rb`.
+Now that we're *almost* configured, let's make a class that uses all this fancy stuff. Under the models directory, note the file `artist.rb`.
 
 ```ruby
 class Artist < ActiveRecord::Base
@@ -195,7 +180,7 @@ class CreateArtists < ActiveRecord::Migration
 end
 ```
 
-Let's add some columns to our table in order to allow for our model to have specific attributes. Let's say we want each artist to have a name, photo_url, and nationality.
+Let's add some ruby code which will add columns to our table in order to allow for our model to have specific attributes. Let's say we want each artist to have a name, photo_url, and nationality.
 
 ```ruby
 class CreateArtists < ActiveRecord::Migration
@@ -219,7 +204,7 @@ Run the migration with `rake db:migrate`. That'll run any migrations that haven'
 
 ###Sacred Cows
 
-And we have a table! Nice work!  And _now_ you've got a `schema.rb` file that was generated for you – this file is _sacred_. **Not** to be touched, only to be admired. It's a snapshot of the current state of your database, and rake is the only one who should be modifying it, ever. Similarly, never change a migration file after it has been run. Repeat after me: "I shall never change a migration file after it has been run." Again! You can get a quick view of which files have been run by entering `rake db:migrate:status`; the files that have been run have a status of `up`, while those that have not have a status of `down`. Your file should have an `up` status now.
+And we have a table! Nice work!  And _now_ you've got a `schema.rb` file that was generated for you—this file is _sacred_. **Not** to be touched, only to be admired. It's a snapshot of the current state of your database, and rake is the only one who should be modifying it, ever. Similarly, never change a migration file after it has been run. Repeat after me: "I shall never change a migration file after it has been run." Again! You can get a quick view of which files have been run by entering `rake db:migrate:status`. The files that have been run have a status of `up`, while those that have not have a status of `down`. Your file should have an `up` status now.
 
 <img style="max-height: 200px;" src="http://www.thebrsblog.com/wp-content/uploads/2012/04/httpwww-andrewolsen-netwp-contentuploads201105sacred-cow.jpg"/>
 
@@ -242,7 +227,7 @@ ActiveRecord::Schema.define(version: 20150710152405) do
 end
 ```
 
-Gorgeous, success! Now let's change it again!
+Success, now let's change it again!
 
 ## Changes to our DB - Demo
 
@@ -265,9 +250,9 @@ class AddInstrumentToArtists < ActiveRecord::Migration
 end
 ```
 
-You can probably guess what this line - `add_column :artists, :instruments, :string` - says: "add a column to the artists table called 'instruments' with a string as its data type".  Run `rake db:migrate:status` for "funzies" (you should have two migration files, one `up` and one `down`), but when you want to migrate run `rake db:migrate` and BAM, you have a new column.
+You can probably guess what this line - `add_column :artists, :instruments, :string`—says: "add a column to the artists table called 'instruments' of type string".  Run `rake db:migrate:status` to see two migration files, one `up` and one `down`. Once `rake db:migrate` is run, both will be `down`, and a new column will exist.
 
-Make a migration _every_ time you need to change your database – whether it's adding or removing things, no exceptions! Changing the database in any way means making a new migration, and telling the computer what you need done. Think of it as an assistant; you don't do the tedious Postgres work, you just tell it what needs doing and tell it to go do it. If you make changes in other ways to your local database, a team member who has cloned the same project will lose state with you. Running migrations of your other team members *is how* both of your separate local databases stay in state!
+**Make a migration _every_ time a change to the database is needed**—whether it's adding or *removing* something! Changing the database in any way means making a new migration, and telling the computer what you need done. Think of it as an assistant; you don't do the tedious Postgres work, you just tell it what needs doing and tell it to go do it. If you make changes in other ways to your local database, a team member who has cloned the same project will lose state with you. Running migrations of your other team members *is how* both of your separate local databases stay in state!
 
 #### Changing or deleting column
 
@@ -317,23 +302,9 @@ According to [the official ActiveRecord docs](http://guides.rubyonrails.org/acti
 
 As always, if you can't remember the exact syntax, reference the [rails guides](http://guides.rubyonrails.org/)!
 
-##Taking a step Back
-
-**So we've created our model, but how is the application actually going to know when to CRUD the data?** The typical way to do this is for your front-end to hit a RESTUL route which executes a corresponding CRUD action on your database using your model. In fact take five minutes to with a neighbor look at the `app.rb` file again and try to figure out what is going on. Answer these questions:
-
-* Which route gets hit when the application is hit with a `POST` to `/artists`
-* What, step by step, happens in the above request?
-* If a `POST` creates a new artist, where does the information (such as name, photo_url, etc) come into the application from?
-
 ##Playing with our Data
 
-**Ok great, I can rely on my application to CRUD data if all my routes are setup and I get a specific request from the front-end, but that seems like a lot of work... what if I just want to do it manually in the console?** Good news, that's totally encouraged! Getting your hand dirty in that fashion is a good way to actually get to play with the models, see how they are working and quickly give yourself some test data to work with (a `seed.rb` file is an even faster way to give yourself fake data to work with, but we'll talk about that later).
-
-We have a gem available to us called `tux`. It will pop us into a ruby environment within the *context* of our application. Run:
-
-```bash
-tux
-```
+Run `app.rb` to enter into a pry session.
 
 ###Creating
 
@@ -349,6 +320,8 @@ Here's `.create`, which does the same thing as `.new` and `.save`, but just in o
 ```ruby
 >> Artist.create({name: "Drake", nationality: "Canadian"})
 ```
+
+>Note: How does one see what SQL code has been generated by these commands?
 
 ###Reading
 
@@ -368,7 +341,7 @@ First we must find the artist to update and then change an attribute.
 
 We will now delete David Bowie, a moment of silence please...
 
-> It is best practice to use an `id` for finding an entry in the table. Assuming David Bowie is number `1` (which he is)...
+> It is best practice to use an `id` for finding an entry in the table. *Assuming David Bowie is number `1` (which he is)*...
 
 ```ruby
 >> david = Artist.find(1)
@@ -391,12 +364,6 @@ For the last part of class, the guys at Tunr, decided they need more information
 - Add another column to your Artists table named "Address" that stores string data (be careful with the datatype on this one - it's not what you think)
 - Add a column with a different data type, and then delete it
 - Update an existing column to have a different name
-
-#### Bonus:
-
-- Update the artist show page to display the new data
-- Try using `tux` to add/edit/destroy instances of Artist models (and thus, records in your database)
-- Register a new artist using the ```artists/new``` end point
 
 
 ## Closing Thoughts
